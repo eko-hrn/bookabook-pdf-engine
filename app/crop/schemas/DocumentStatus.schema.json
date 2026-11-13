@@ -1,0 +1,33 @@
+{
+  "description": "Aggregated document-level processing status.\n\nFollows the document-level integrity validation logic from Spec §12.",
+  "properties": {
+    "has_unknown_layout": {
+      "default": false,
+      "description": "Whether any page has UNKNOWN_LAYOUT classification",
+      "title": "Has Unknown Layout",
+      "type": "boolean"
+    },
+    "has_manual_review_required": {
+      "default": false,
+      "description": "Whether any page has MANUAL_REVIEW_REQUIRED readiness",
+      "title": "Has Manual Review Required",
+      "type": "boolean"
+    },
+    "all_pages_crop_ready": {
+      "default": false,
+      "description": "Whether all classified pages have CROP_READY readiness",
+      "title": "All Pages Crop Ready",
+      "type": "boolean"
+    },
+    "document_status": {
+      "description": "Aggregated status: 'REJECTED_UNKNOWN_LAYOUT' | 'MANUAL_REVIEW_REQUIRED' | 'AUTO_READY_FOR_PREVIEW'",
+      "title": "Document Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "document_status"
+  ],
+  "title": "DocumentStatus",
+  "type": "object"
+}

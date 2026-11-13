@@ -1,0 +1,61 @@
+{
+  "pdf_page_index": 1,
+  "pdf_page_number": 2,
+  "width_pt": 878.74,
+  "height_pt": 1247.24,
+  "orientation": "PORTRAIT",
+  "rotation": 0,
+  "layout_type": "IMPOSITION_4UP",
+  "classification_status": "CLASSIFIED",
+  "confidence_score": 1.0,
+  "crop_strategy": "Imposition4UpCropStrategy",
+  "crop_readiness": "CROP_READY",
+  "manual_review_flags": [],
+  "crop_regions": [
+    {
+      "region_id": "PAGE-01",
+      "quadrant": 1,
+      "x_min_pt": 13.85,
+      "y_min_pt": 14.5,
+      "x_max_pt": 439.37,
+      "y_max_pt": 623.62,
+      "target_width_px": 1773,
+      "target_height_px": 2538,
+      "blank_page_status": "CONTENT_PRESENT"
+    },
+    {
+      "region_id": "PAGE-02",
+      "quadrant": 2,
+      "x_min_pt": 439.37,
+      "y_min_pt": 14.5,
+      "x_max_pt": 864.89,
+      "y_max_pt": 623.62,
+      "target_width_px": 1773,
+      "target_height_px": 2538,
+      "blank_page_status": "CONTENT_PRESENT"
+    },
+    {
+      "region_id": "PAGE-03",
+      "quadrant": 3,
+      "x_min_pt": 13.85,
+      "y_min_pt": 623.62,
+      "x_max_pt": 439.37,
+      "y_max_pt": 1232.74,
+      "target_width_px": 1773,
+      "target_height_px": 2538,
+      "blank_page_status": "CONTENT_PRESENT"
+    },
+    {
+      "region_id": "PAGE-04",
+      "quadrant": 4,
+      "x_min_pt": 439.37,
+      "y_min_pt": 623.62,
+      "x_max_pt": 864.89,
+      "y_max_pt": 1232.74,
+      "target_width_px": 1773,
+      "target_height_px": 2538,
+      "blank_page_status": "CONTENT_PRESENT"
+    }
+  ],
+  "expected_page_yield": 4
+}

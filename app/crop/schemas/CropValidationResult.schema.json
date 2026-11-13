@@ -1,0 +1,141 @@
+{
+  "description": "Result of validating a single crop region against safety rules.\n\nUsed to report whether a proposed crop operation is safe to execute\nautomatically or requires manual review.",
+  "properties": {
+    "region_id": {
+      "description": "Region identifier matching CropRegion.region_id",
+      "minLength": 1,
+      "title": "Region Id",
+      "type": "string"
+    },
+    "pdf_page_index": {
+      "description": "Zero-based page index of the source PDF page",
+      "minimum": 0,
+      "title": "Pdf Page Index",
+      "type": "integer"
+    },
+    "is_valid": {
+      "description": "Whether all validation checks passed",
+      "title": "Is Valid",
+      "type": "boolean"
+    },
+    "actual_width_px": {
+      "anyOf": [
+        {
+          "exclusiveMinimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Actual rendered width in pixels (if computed)",
+      "title": "Actual Width Px"
+    },
+    "actual_height_px": {
+      "anyOf": [
+        {
+          "exclusiveMinimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Actual rendered height in pixels (if computed)",
+      "title": "Actual Height Px"
+    },
+    "expected_width_px": {
+      "description": "Expected width in pixels from profile target",
+      "exclusiveMinimum": 0,
+      "title": "Expected Width Px",
+      "type": "integer"
+    },
+    "expected_height_px": {
+      "description": "Expected height in pixels from profile target",
+      "exclusiveMinimum": 0,
+      "title": "Expected Height Px",
+      "type": "integer"
+    },
+    "dimension_match": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Whether actual dimensions match expected (None if not yet computed)",
+      "title": "Dimension Match"
+    },
+    "tick_deviation_x_mm": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Tick mark deviation on X axis in mm (4-Up only)",
+      "title": "Tick Deviation X Mm"
+    },
+    "tick_deviation_y_mm": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Tick mark deviation on Y axis in mm (4-Up only)",
+      "title": "Tick Deviation Y Mm"
+    },
+    "tick_within_tolerance": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Whether tick deviations are within tolerance (≤ 1.0 mm per Spec §6.B)",
+      "title": "Tick Within Tolerance"
+    },
+    "errors": {
+      "description": "List of validation error messages",
+      "items": {
+        "type": "string"
+      },
+      "title": "Errors",
+      "type": "array"
+    },
+    "warnings": {
+      "description": "List of validation warning messages (non-blocking)",
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "region_id",
+    "pdf_page_index",
+    "is_valid",
+    "expected_width_px",
+    "expected_height_px"
+  ],
+  "title": "CropValidationResult",
+  "type": "object"
+}

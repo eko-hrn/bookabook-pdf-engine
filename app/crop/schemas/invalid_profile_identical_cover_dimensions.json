@@ -1,0 +1,29 @@
+{
+  "profile_id": "bad_profile_identical_cover",
+  "profile_name": "Bad Profile - Identical Cover Dimensions",
+  "production_basis": "OPTION_B_EXACT_TARGET",
+  "dpi": 300,
+  "target_content_width_px": 1773,
+  "target_content_height_px": 2538,
+  "target_content_width_pt": 425.52,
+  "target_content_height_pt": 609.12,
+  "cover_dimensions": {
+    "target_backcover_width_px": 1890,
+    "target_backcover_height_px": 2657,
+    "target_backcover_dpi": 300,
+    "target_cover_width_px": 1890,
+    "target_cover_height_px": 2657,
+    "target_cover_dpi": 300,
+    "frontcover_height_discrepancy_note": "test"
+  },
+  "cover_auto_crop_enabled": false,
+  "outer_margin": {
+    "horizontal_pt": 13.85,
+    "vertical_pt": 14.5,
+    "horizontal_mm": 4.886,
+    "vertical_mm": 5.115
+  },
+  "tick_deviation_tolerance_mm": 1.0,
+  "spine_width_mm": 15.02,
+  "spine_excluded": true
+}

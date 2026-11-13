@@ -1,0 +1,88 @@
+{
+  "$defs": {
+    "BlankPageStatus": {
+      "description": "Blank page detection status (Spec §7.B).\n\nAll statuses remain CROP_READY (non-blocking warning).",
+      "enum": [
+        "CONTENT_PRESENT",
+        "LOW_CONTRAST_BLANK_SUSPECTED",
+        "BLANK_PAGE_DETECTED"
+      ],
+      "title": "BlankPageStatus",
+      "type": "string"
+    }
+  },
+  "description": "A single rectangular crop region in PDF coordinate space.\n\nDefines the bounding box [x_min, y_min, x_max, y_max] in points for\none output page, plus target pixel dimensions at the profile DPI.\n\nCoordinate system follows PyMuPDF convention (origin at top-left).",
+  "properties": {
+    "region_id": {
+      "description": "Output filename stem for this region (e.g. 'PAGE-01', 'PAGE-02', 'COVER', 'BACKCOVER')",
+      "minLength": 1,
+      "title": "Region Id",
+      "type": "string"
+    },
+    "quadrant": {
+      "anyOf": [
+        {
+          "maximum": 4,
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Quadrant index for 4-Up layout (1=TL, 2=TR, 3=BL, 4=BR). None for non-4-Up.",
+      "title": "Quadrant"
+    },
+    "x_min_pt": {
+      "description": "Left edge of crop region in points",
+      "minimum": 0,
+      "title": "X Min Pt",
+      "type": "number"
+    },
+    "y_min_pt": {
+      "description": "Top edge of crop region in points",
+      "minimum": 0,
+      "title": "Y Min Pt",
+      "type": "number"
+    },
+    "x_max_pt": {
+      "description": "Right edge of crop region in points",
+      "title": "X Max Pt",
+      "type": "number"
+    },
+    "y_max_pt": {
+      "description": "Bottom edge of crop region in points",
+      "title": "Y Max Pt",
+      "type": "number"
+    },
+    "target_width_px": {
+      "description": "Expected output width in pixels at render DPI",
+      "exclusiveMinimum": 0,
+      "title": "Target Width Px",
+      "type": "integer"
+    },
+    "target_height_px": {
+      "description": "Expected output height in pixels at render DPI",
+      "exclusiveMinimum": 0,
+      "title": "Target Height Px",
+      "type": "integer"
+    },
+    "blank_page_status": {
+      "$ref": "#/$defs/BlankPageStatus",
+      "default": "CONTENT_PRESENT",
+      "description": "Blank page detection result (Spec §7.B). Non-blocking warning."
+    }
+  },
+  "required": [
+    "region_id",
+    "x_min_pt",
+    "y_min_pt",
+    "x_max_pt",
+    "y_max_pt",
+    "target_width_px",
+    "target_height_px"
+  ],
+  "title": "CropRegion",
+  "type": "object"
+}

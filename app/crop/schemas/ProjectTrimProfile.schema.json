@@ -1,0 +1,228 @@
+{
+  "$defs": {
+    "CoverDimensions": {
+      "description": "Cover target dimensions per specification (Spec §8.A, §14.A.4, §16.1).\n\nSpecification defines distinct output dimensions:\n- BACKCOVER.jpg: 1890 × 2657 px @ 300 DPI\n- COVER.jpg: 630 × 886 px @ 100 DPI",
+      "properties": {
+        "target_backcover_width_px": {
+          "description": "BACKCOVER.jpg target width at 300 DPI (Spec §8.A: 1890 px)",
+          "exclusiveMinimum": 0,
+          "title": "Target Backcover Width Px",
+          "type": "integer"
+        },
+        "target_backcover_height_px": {
+          "description": "BACKCOVER.jpg target height at 300 DPI (Spec §8.A: 2657 px)",
+          "exclusiveMinimum": 0,
+          "title": "Target Backcover Height Px",
+          "type": "integer"
+        },
+        "target_backcover_dpi": {
+          "default": 300,
+          "description": "BACKCOVER.jpg resolution in DPI (Spec §8.A: 300 DPI)",
+          "exclusiveMinimum": 0,
+          "title": "Target Backcover Dpi",
+          "type": "integer"
+        },
+        "target_cover_width_px": {
+          "description": "COVER.jpg target width at 100 DPI (Spec §8.A, §14.A.4: 630 px)",
+          "exclusiveMinimum": 0,
+          "title": "Target Cover Width Px",
+          "type": "integer"
+        },
+        "target_cover_height_px": {
+          "description": "COVER.jpg target height at 100 DPI (Spec §8.A, §14.A.4: 886 px)",
+          "exclusiveMinimum": 0,
+          "title": "Target Cover Height Px",
+          "type": "integer"
+        },
+        "target_cover_dpi": {
+          "default": 100,
+          "description": "COVER.jpg resolution in DPI (Spec §8.A: 100 DPI)",
+          "exclusiveMinimum": 0,
+          "title": "Target Cover Dpi",
+          "type": "integer"
+        },
+        "frontcover_height_discrepancy_note": {
+          "description": "Documents the 1 px discrepancy between 3x scaling (2658 px) and vector 300 DPI render (2657 px). Status: UNRESOLVED_ROUNDING_1PX",
+          "title": "Frontcover Height Discrepancy Note",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_backcover_width_px",
+        "target_backcover_height_px",
+        "target_cover_width_px",
+        "target_cover_height_px",
+        "frontcover_height_discrepancy_note"
+      ],
+      "title": "CoverDimensions",
+      "type": "object"
+    },
+    "CropStrategyType": {
+      "description": "Crop strategy types mapped 1:1 to layout types (Spec §8.B).",
+      "enum": [
+        "CoverCropStrategy",
+        "Imposition4UpCropStrategy",
+        "SinglePageCropStrategy"
+      ],
+      "title": "CropStrategyType",
+      "type": "string"
+    },
+    "OuterMarginConfig": {
+      "description": "Outer margin trimming parameters for 4-Up imposition (Spec §10.A, §17).\n\nThese are the digital margins trimmed from the 4 outer edges of the\nimposition sheet to yield the clean A5 book page dimensions.",
+      "properties": {
+        "horizontal_pt": {
+          "description": "Horizontal outer margin in points (Spec §10.A: 13.85 pt)",
+          "exclusiveMinimum": 0,
+          "title": "Horizontal Pt",
+          "type": "number"
+        },
+        "vertical_pt": {
+          "description": "Vertical outer margin in points (Spec §10.A: 14.50 pt)",
+          "exclusiveMinimum": 0,
+          "title": "Vertical Pt",
+          "type": "number"
+        },
+        "horizontal_mm": {
+          "description": "Horizontal outer margin in mm (Spec §10.A: 4.886 mm)",
+          "exclusiveMinimum": 0,
+          "title": "Horizontal Mm",
+          "type": "number"
+        },
+        "vertical_mm": {
+          "description": "Vertical outer margin in mm (Spec §10.A: 5.115 mm)",
+          "exclusiveMinimum": 0,
+          "title": "Vertical Mm",
+          "type": "number"
+        }
+      },
+      "required": [
+        "horizontal_pt",
+        "vertical_pt",
+        "horizontal_mm",
+        "vertical_mm"
+      ],
+      "title": "OuterMarginConfig",
+      "type": "object"
+    },
+    "ProductionBasis": {
+      "description": "Production output dimension basis (Spec §15.A.5).",
+      "enum": [
+        "OPTION_B_EXACT_TARGET"
+      ],
+      "title": "ProductionBasis",
+      "type": "string"
+    }
+  },
+  "description": "Project-level trim configuration profile (Spec §10.A, §15.A).\n\nDefines target output dimensions, margin parameters, and production rules\nfor the entire project. This is the top-level configuration that governs\nall crop operations.\n\nAll dimension values originate from the specification's reconciliation\ntable (§17) and JSON config example (§10.A).",
+  "properties": {
+    "profile_id": {
+      "description": "Unique profile identifier (lowercase, underscores only)",
+      "minLength": 1,
+      "pattern": "^[a-z0-9_]+$",
+      "title": "Profile Id",
+      "type": "string"
+    },
+    "profile_name": {
+      "description": "Human-readable profile name",
+      "minLength": 1,
+      "title": "Profile Name",
+      "type": "string"
+    },
+    "production_basis": {
+      "$ref": "#/$defs/ProductionBasis",
+      "description": "Production output dimension basis (Spec §15.A.5)"
+    },
+    "dpi": {
+      "default": 300,
+      "description": "Output resolution in DPI (Spec §8.B: 300 DPI)",
+      "exclusiveMinimum": 0,
+      "title": "Dpi",
+      "type": "integer"
+    },
+    "target_content_width_px": {
+      "description": "Target content page width at 300 DPI (Spec §8.B.2: 1773 px)",
+      "exclusiveMinimum": 0,
+      "title": "Target Content Width Px",
+      "type": "integer"
+    },
+    "target_content_height_px": {
+      "description": "Target content page height at 300 DPI (Spec §8.B.2: 2538 px)",
+      "exclusiveMinimum": 0,
+      "title": "Target Content Height Px",
+      "type": "integer"
+    },
+    "target_content_width_pt": {
+      "description": "Target content page width in points (Spec §8.B.2: 425.52 pt)",
+      "exclusiveMinimum": 0,
+      "title": "Target Content Width Pt",
+      "type": "number"
+    },
+    "target_content_height_pt": {
+      "description": "Target content page height in points (Spec §8.B.2: 609.12 pt)",
+      "exclusiveMinimum": 0,
+      "title": "Target Content Height Pt",
+      "type": "number"
+    },
+    "cover_dimensions": {
+      "$ref": "#/$defs/CoverDimensions",
+      "description": "Cover target dimensions and discrepancy tracking"
+    },
+    "cover_auto_crop_enabled": {
+      "default": false,
+      "description": "Cover auto-crop production flag (Spec §8.B.1: ALWAYS False). Cover sheets must remain MANUAL_REVIEW_REQUIRED.",
+      "title": "Cover Auto Crop Enabled",
+      "type": "boolean"
+    },
+    "outer_margin": {
+      "$ref": "#/$defs/OuterMarginConfig",
+      "description": "Outer margin trimming parameters for 4-Up imposition"
+    },
+    "tick_deviation_tolerance_mm": {
+      "description": "Maximum tick mark deviation tolerance in mm (Spec §6.B: 1.0 mm)",
+      "exclusiveMinimum": 0,
+      "title": "Tick Deviation Tolerance Mm",
+      "type": "number"
+    },
+    "tick_deviation_tolerance_pt": {
+      "default": null,
+      "description": "Computed: tick_deviation_tolerance_mm converted to points. 1 mm = 2.835 pt (Spec §6.B).",
+      "title": "Tick Deviation Tolerance Pt",
+      "type": "number"
+    },
+    "spine_width_mm": {
+      "description": "Spine width in mm (Spec §8.B.1: 15.02 mm)",
+      "exclusiveMinimum": 0,
+      "title": "Spine Width Mm",
+      "type": "number"
+    },
+    "spine_excluded": {
+      "default": true,
+      "description": "Whether spine zone is excluded from cover crop (Spec §8.B.1)",
+      "title": "Spine Excluded",
+      "type": "boolean"
+    },
+    "applicable_strategies": {
+      "description": "Crop strategies this profile applies to",
+      "items": {
+        "$ref": "#/$defs/CropStrategyType"
+      },
+      "title": "Applicable Strategies",
+      "type": "array"
+    }
+  },
+  "required": [
+    "profile_id",
+    "profile_name",
+    "production_basis",
+    "target_content_width_px",
+    "target_content_height_px",
+    "target_content_width_pt",
+    "target_content_height_pt",
+    "cover_dimensions",
+    "outer_margin",
+    "tick_deviation_tolerance_mm",
+    "spine_width_mm"
+  ],
+  "title": "ProjectTrimProfile",
+  "type": "object"
+}

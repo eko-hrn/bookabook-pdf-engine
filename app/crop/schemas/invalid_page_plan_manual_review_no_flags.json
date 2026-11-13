@@ -1,0 +1,16 @@
+{
+  "pdf_page_index": 1,
+  "pdf_page_number": 2,
+  "width_pt": 878.74,
+  "height_pt": 1247.24,
+  "orientation": "PORTRAIT",
+  "rotation": 0,
+  "layout_type": "IMPOSITION_4UP",
+  "classification_status": "CLASSIFIED",
+  "confidence_score": 0.95,
+  "crop_strategy": "Imposition4UpCropStrategy",
+  "crop_readiness": "MANUAL_REVIEW_REQUIRED",
+  "manual_review_flags": [],
+  "crop_regions": [],
+  "expected_page_yield": 4
+}

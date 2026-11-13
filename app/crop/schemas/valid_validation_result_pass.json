@@ -1,0 +1,15 @@
+{
+  "region_id": "PAGE-01",
+  "pdf_page_index": 1,
+  "is_valid": true,
+  "actual_width_px": 1773,
+  "actual_height_px": 2538,
+  "expected_width_px": 1773,
+  "expected_height_px": 2538,
+  "dimension_match": true,
+  "tick_deviation_x_mm": 0.3,
+  "tick_deviation_y_mm": 0.2,
+  "tick_within_tolerance": true,
+  "errors": [],
+  "warnings": []
+}

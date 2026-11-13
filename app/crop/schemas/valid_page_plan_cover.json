@@ -1,0 +1,41 @@
+{
+  "pdf_page_index": 0,
+  "pdf_page_number": 1,
+  "width_pt": 1247.24,
+  "height_pt": 878.74,
+  "orientation": "LANDSCAPE",
+  "rotation": 0,
+  "layout_type": "COVER_SPREAD",
+  "classification_status": "CLASSIFIED",
+  "confidence_score": 0.95,
+  "crop_strategy": "CoverCropStrategy",
+  "crop_readiness": "MANUAL_REVIEW_REQUIRED",
+  "manual_review_flags": [
+    "COVER_FORMULA_UNVALIDATED"
+  ],
+  "crop_regions": [
+    {
+      "region_id": "BACKCOVER",
+      "quadrant": null,
+      "x_min_pt": 155.95,
+      "y_min_pt": 120.49,
+      "x_max_pt": 608.54,
+      "y_max_pt": 758.25,
+      "target_width_px": 1890,
+      "target_height_px": 2657,
+      "blank_page_status": "CONTENT_PRESENT"
+    },
+    {
+      "region_id": "COVER",
+      "quadrant": null,
+      "x_min_pt": 651.11,
+      "y_min_pt": 120.49,
+      "x_max_pt": 1105.62,
+      "y_max_pt": 758.25,
+      "target_width_px": 630,
+      "target_height_px": 886,
+      "blank_page_status": "CONTENT_PRESENT"
+    }
+  ],
+  "expected_page_yield": 2
+}

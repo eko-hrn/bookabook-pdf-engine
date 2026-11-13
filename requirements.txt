@@ -1,0 +1,33 @@
+# PDF PROCESSING
+PyMuPDF
+opencv-python-headless
+Pillow
+numpy
+
+# BACKEND API
+fastapi
+uvicorn[standard]
+python-multipart
+
+# CONFIGURATION
+pydantic-settings
+python-dotenv
+
+# BACKGROUND PROCESSING
+celery[redis]
+redis
+
+# TESTING
+pytest
+pytest-cov
+httpx
+
+# CODE QUALITY
+ruff
+
+# DATABASE (SUPABASE POSTGRESQL)
+SQLAlchemy>=2.0.30
+psycopg[binary]>=3.2.0
+
+# OBJECT STORAGE (CLOUDFLARE R2 S3-COMPATIBLE)
+boto3>=1.35.0

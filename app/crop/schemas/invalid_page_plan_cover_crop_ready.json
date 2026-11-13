@@ -1,0 +1,16 @@
+{
+  "pdf_page_index": 0,
+  "pdf_page_number": 1,
+  "width_pt": 1247.24,
+  "height_pt": 878.74,
+  "orientation": "LANDSCAPE",
+  "rotation": 0,
+  "layout_type": "COVER_SPREAD",
+  "classification_status": "CLASSIFIED",
+  "confidence_score": 0.95,
+  "crop_strategy": "CoverCropStrategy",
+  "crop_readiness": "CROP_READY",
+  "manual_review_flags": [],
+  "crop_regions": [],
+  "expected_page_yield": 2
+}

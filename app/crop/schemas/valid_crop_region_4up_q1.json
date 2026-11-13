@@ -1,0 +1,11 @@
+{
+  "region_id": "PAGE-01",
+  "quadrant": 1,
+  "x_min_pt": 13.85,
+  "y_min_pt": 14.5,
+  "x_max_pt": 439.37,
+  "y_max_pt": 623.62,
+  "target_width_px": 1773,
+  "target_height_px": 2538,
+  "blank_page_status": "CONTENT_PRESENT"
+}

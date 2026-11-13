@@ -1,0 +1,12 @@
+{
+  "region_id": "PAGE-01",
+  "pdf_page_index": 1,
+  "is_valid": true,
+  "actual_width_px": 1770,
+  "actual_height_px": 2538,
+  "expected_width_px": 1773,
+  "expected_height_px": 2538,
+  "dimension_match": true,
+  "errors": [],
+  "warnings": []
+}

@@ -1,0 +1,18 @@
+{
+  "region_id": "PAGE-01",
+  "pdf_page_index": 1,
+  "is_valid": false,
+  "actual_width_px": 1770,
+  "actual_height_px": 2538,
+  "expected_width_px": 1773,
+  "expected_height_px": 2538,
+  "dimension_match": false,
+  "tick_deviation_x_mm": 1.5,
+  "tick_deviation_y_mm": 0.2,
+  "tick_within_tolerance": false,
+  "errors": [
+    "Dimension mismatch: actual 1770x2538 != expected 1773x2538",
+    "Tick deviation X (1.5 mm) exceeds tolerance (1.0 mm)"
+  ],
+  "warnings": []
+}

@@ -1,0 +1,265 @@
+{
+  "$defs": {
+    "BlankPageStatus": {
+      "description": "Blank page detection status (Spec §7.B).\n\nAll statuses remain CROP_READY (non-blocking warning).",
+      "enum": [
+        "CONTENT_PRESENT",
+        "LOW_CONTRAST_BLANK_SUSPECTED",
+        "BLANK_PAGE_DETECTED"
+      ],
+      "title": "BlankPageStatus",
+      "type": "string"
+    },
+    "ClassificationStatus": {
+      "description": "Layout classification status from the classifier engine (Spec §2, §11).\n\nThese represent the outcome of TAHAP 1: In-Memory Layout Classifier Engine.",
+      "enum": [
+        "CLASSIFIED",
+        "UNKNOWN_LAYOUT",
+        "CANDIDATE_IMPOSITION_4UP_FLIPPED"
+      ],
+      "title": "ClassificationStatus",
+      "type": "string"
+    },
+    "CropReadinessStatus": {
+      "description": "Crop execution readiness status from safety guardrails (Spec §2, §11).\n\nThese represent the outcome of TAHAP 2: Crop Strategy Router &\nSafety Guardrails Validator.",
+      "enum": [
+        "CROP_READY",
+        "MANUAL_REVIEW_REQUIRED",
+        "NOT_APPLICABLE"
+      ],
+      "title": "CropReadinessStatus",
+      "type": "string"
+    },
+    "CropRegion": {
+      "description": "A single rectangular crop region in PDF coordinate space.\n\nDefines the bounding box [x_min, y_min, x_max, y_max] in points for\none output page, plus target pixel dimensions at the profile DPI.\n\nCoordinate system follows PyMuPDF convention (origin at top-left).",
+      "properties": {
+        "region_id": {
+          "description": "Output filename stem for this region (e.g. 'PAGE-01', 'PAGE-02', 'COVER', 'BACKCOVER')",
+          "minLength": 1,
+          "title": "Region Id",
+          "type": "string"
+        },
+        "quadrant": {
+          "anyOf": [
+            {
+              "maximum": 4,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Quadrant index for 4-Up layout (1=TL, 2=TR, 3=BL, 4=BR). None for non-4-Up.",
+          "title": "Quadrant"
+        },
+        "x_min_pt": {
+          "description": "Left edge of crop region in points",
+          "minimum": 0,
+          "title": "X Min Pt",
+          "type": "number"
+        },
+        "y_min_pt": {
+          "description": "Top edge of crop region in points",
+          "minimum": 0,
+          "title": "Y Min Pt",
+          "type": "number"
+        },
+        "x_max_pt": {
+          "description": "Right edge of crop region in points",
+          "title": "X Max Pt",
+          "type": "number"
+        },
+        "y_max_pt": {
+          "description": "Bottom edge of crop region in points",
+          "title": "Y Max Pt",
+          "type": "number"
+        },
+        "target_width_px": {
+          "description": "Expected output width in pixels at render DPI",
+          "exclusiveMinimum": 0,
+          "title": "Target Width Px",
+          "type": "integer"
+        },
+        "target_height_px": {
+          "description": "Expected output height in pixels at render DPI",
+          "exclusiveMinimum": 0,
+          "title": "Target Height Px",
+          "type": "integer"
+        },
+        "blank_page_status": {
+          "$ref": "#/$defs/BlankPageStatus",
+          "default": "CONTENT_PRESENT",
+          "description": "Blank page detection result (Spec §7.B). Non-blocking warning."
+        }
+      },
+      "required": [
+        "region_id",
+        "x_min_pt",
+        "y_min_pt",
+        "x_max_pt",
+        "y_max_pt",
+        "target_width_px",
+        "target_height_px"
+      ],
+      "title": "CropRegion",
+      "type": "object"
+    },
+    "CropStrategyType": {
+      "description": "Crop strategy types mapped 1:1 to layout types (Spec §8.B).",
+      "enum": [
+        "CoverCropStrategy",
+        "Imposition4UpCropStrategy",
+        "SinglePageCropStrategy"
+      ],
+      "title": "CropStrategyType",
+      "type": "string"
+    },
+    "LayoutType": {
+      "description": "Layout types identified by the classifier (Spec §4, §11).",
+      "enum": [
+        "COVER_SPREAD",
+        "IMPOSITION_4UP",
+        "SINGLE_PAGE"
+      ],
+      "title": "LayoutType",
+      "type": "string"
+    },
+    "ManualReviewFlag": {
+      "description": "Flags indicating reason for manual review hold (Spec §2, §6, §8, §11).\n\nMultiple flags may be present on a single page.",
+      "enum": [
+        "COVER_FORMULA_UNVALIDATED",
+        "TICK_DEVIATION_EXCEEDED",
+        "TICK_ASYMMETRY_DETECTED",
+        "FLIPPED_ORIENTATION_DETECTED",
+        "ROTATED_SHEET_DETECTED",
+        "OPENCV_FALLBACK_USED",
+        "NON_NOMINAL_DIMENSIONS_DETECTED"
+      ],
+      "title": "ManualReviewFlag",
+      "type": "string"
+    },
+    "Orientation": {
+      "description": "PDF page orientation (Spec §3.A.1).",
+      "enum": [
+        "LANDSCAPE",
+        "PORTRAIT",
+        "SQUARE"
+      ],
+      "title": "Orientation",
+      "type": "string"
+    }
+  },
+  "description": "Crop plan for a single PDF page/sheet.\n\nCombines classification results from TAHAP 1 (Layout Classifier)\nwith crop readiness from TAHAP 2 (Safety Guardrails), and lists\nthe CropRegion(s) to extract from this page.",
+  "properties": {
+    "pdf_page_index": {
+      "description": "Zero-based page index in the PDF document",
+      "minimum": 0,
+      "title": "Pdf Page Index",
+      "type": "integer"
+    },
+    "pdf_page_number": {
+      "description": "One-based page number (pdf_page_index + 1)",
+      "minimum": 1,
+      "title": "Pdf Page Number",
+      "type": "integer"
+    },
+    "width_pt": {
+      "description": "Page width from page.rect in points",
+      "exclusiveMinimum": 0,
+      "title": "Width Pt",
+      "type": "number"
+    },
+    "height_pt": {
+      "description": "Page height from page.rect in points",
+      "exclusiveMinimum": 0,
+      "title": "Height Pt",
+      "type": "number"
+    },
+    "orientation": {
+      "$ref": "#/$defs/Orientation",
+      "description": "Detected page orientation (Spec §3.A.1)"
+    },
+    "rotation": {
+      "default": 0,
+      "description": "PDF page rotation value (0, 90, 180, or 270 degrees)",
+      "title": "Rotation",
+      "type": "integer"
+    },
+    "layout_type": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/LayoutType"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Detected layout type (None if UNKNOWN_LAYOUT)"
+    },
+    "classification_status": {
+      "$ref": "#/$defs/ClassificationStatus",
+      "description": "Classification outcome from layout classifier (Spec §2)"
+    },
+    "confidence_score": {
+      "description": "Classification confidence score C ∈ [0.0, 1.0] (Spec §5)",
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Confidence Score",
+      "type": "number"
+    },
+    "crop_strategy": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CropStrategyType"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Assigned crop strategy (None if UNKNOWN_LAYOUT)"
+    },
+    "crop_readiness": {
+      "$ref": "#/$defs/CropReadinessStatus",
+      "description": "Crop execution readiness status (Spec §2, §11)"
+    },
+    "manual_review_flags": {
+      "description": "Flags indicating reasons for MANUAL_REVIEW_REQUIRED",
+      "items": {
+        "$ref": "#/$defs/ManualReviewFlag"
+      },
+      "title": "Manual Review Flags",
+      "type": "array"
+    },
+    "crop_regions": {
+      "description": "List of crop regions to extract from this page",
+      "items": {
+        "$ref": "#/$defs/CropRegion"
+      },
+      "title": "Crop Regions",
+      "type": "array"
+    },
+    "expected_page_yield": {
+      "description": "Number of book pages this sheet produces (Cover=2, 4-Up=4, Single=1, Unknown=0)",
+      "minimum": 0,
+      "title": "Expected Page Yield",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "pdf_page_index",
+    "pdf_page_number",
+    "width_pt",
+    "height_pt",
+    "orientation",
+    "classification_status",
+    "confidence_score",
+    "crop_readiness",
+    "expected_page_yield"
+  ],
+  "title": "PageCropPlan",
+  "type": "object"
+}

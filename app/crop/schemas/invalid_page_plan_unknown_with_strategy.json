@@ -1,0 +1,16 @@
+{
+  "pdf_page_index": 0,
+  "pdf_page_number": 1,
+  "width_pt": 500.0,
+  "height_pt": 700.0,
+  "orientation": "PORTRAIT",
+  "rotation": 0,
+  "layout_type": null,
+  "classification_status": "UNKNOWN_LAYOUT",
+  "confidence_score": 0.4,
+  "crop_strategy": "SinglePageCropStrategy",
+  "crop_readiness": "NOT_APPLICABLE",
+  "manual_review_flags": [],
+  "crop_regions": [],
+  "expected_page_yield": 0
+}

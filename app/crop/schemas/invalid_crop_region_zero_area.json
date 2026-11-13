@@ -1,0 +1,10 @@
+{
+  "region_id": "PAGE-01",
+  "quadrant": 1,
+  "x_min_pt": 100.0,
+  "y_min_pt": 100.0,
+  "x_max_pt": 100.0,
+  "y_max_pt": 500.0,
+  "target_width_px": 1773,
+  "target_height_px": 2538
+}
