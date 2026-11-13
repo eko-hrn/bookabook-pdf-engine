@@ -138,8 +138,6 @@ def test_books_process_save_and_public_showcase_e2e(client: TestClient) -> None:
             "email": "studio@bookabook.id",
         },
     )
-    if save_res.status_code != 201:
-        print("\nDEBUG_SAVE_RES_ERROR:", save_res.status_code, save_res.text)
     assert save_res.status_code == 201
     saved = save_res.json()
     book_id = saved["book_id"]

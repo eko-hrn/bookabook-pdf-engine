@@ -8,20 +8,30 @@ from typing import Optional
 from app.storage.base import StorageAdapter, normalize_object_key
 
 
+def _canonical_path(p: Path | str) -> Path:
+    r"""Normalize path on Windows and POSIX, stripping extended prefix (\\?\) if present."""
+    resolved = Path(p).resolve()
+    s = str(resolved)
+    if s.startswith("\\\\?\\"):
+        s = s[4:]
+    return Path(s)
+
+
 class LocalStorageAdapter(StorageAdapter):
     """Stores exported JPG artifacts on the local filesystem inside base_dir."""
 
     backend_name = "local"
 
     def __init__(self, base_dir: Path | str) -> None:
-        self.base_dir = Path(base_dir).resolve()
+        self.base_dir = _canonical_path(base_dir)
         self.base_dir.mkdir(parents=True, exist_ok=True)
 
     def _resolve_safe_path(self, object_key: str) -> Path:
         norm = normalize_object_key(object_key)
-        candidate = (self.base_dir / norm).resolve()
-        if candidate != self.base_dir and self.base_dir not in candidate.parents:
-            print(f"SAFE_PATH_MISMATCH: base_dir={self.base_dir!r}, candidate={candidate!r}, parents={candidate.parents!r}")
+        candidate = _canonical_path(self.base_dir / norm)
+        try:
+            candidate.relative_to(self.base_dir)
+        except ValueError:
             raise ValueError(f"Unsafe object key escapes storage root: '{object_key}'")
         return candidate
 
