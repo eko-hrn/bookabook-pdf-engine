@@ -1,14 +1,8 @@
 # Bookabook PDF Engine
 
-Sistem otomasi pemrosesan dan ekstraksi PDF buku anak beresolusi tinggi (300 DPI) menjadi halaman cropped JPEG siap cetak dan showcase interaktif web.
-
----
-
 ## Daftar Isi
 
-- [Deskripsi Proyek](#deskripsi-proyek)
 - [Arsitektur Sistem](#arsitektur-sistem)
-- [Fitur Utama](#fitur-utama)
 - [Prasyarat Sistem](#prasyarat-sistem)
 - [Instalasi](#instalasi)
   - [1. Backend Setup (Python)](#1-backend-setup-python)
@@ -20,19 +14,6 @@ Sistem otomasi pemrosesan dan ekstraksi PDF buku anak beresolusi tinggi (300 DPI
 - [Keamanan & Manajemen Credential](#keamanan--manajemen-credential)
 - [Struktur Direktori](#struktur-direktori)
 - [Lisensi](#lisensi)
-
----
-
-## Deskripsi Proyek
-
-**Bookabook PDF Engine** dirancang khusus untuk memproses file PDF buku anak (baik spread maupun sheet imposition 4-up) secara deterministik tanpa distorsi geometri:
-- Mengekstrak lembar cover spread menjadi **`COVER.jpg`** (sisi kanan spine) dan **`BACKCOVER.jpg`** (sisi kiri spine) dengan pemisahan spine otomatis tanpa memotong artwork utama.
-- Membagi lembar imposition 4-up menjadi halaman interior berurutan: **`PAGE-01.jpg`** sampai **`PAGE-N.jpg`**.
-- Menerapkan **kompresi adaptif JPEG 300 DPI** dengan batas ketat ukuran file:
-  - `COVER.jpg`: Maksimal **400 KB** (409,600 bytes).
-  - `PAGE-01.jpg` s/d `PAGE-N.jpg`: Maksimal **400 KB** (409,600 bytes) per halaman.
-  - `BACKCOVER.jpg`: Maksimal **1 MB** (1,048,576 bytes) untuk mempertahankan ketajaman foto anak.
-- Menyimpan metadata ke **Supabase PostgreSQL** dan binary JPG ke **Supabase Storage** (public bucket) dengan pengiriman langsung melalui public CDN ke browser frontend tanpa proxy backend.
 
 ---
 
@@ -73,29 +54,6 @@ Sistem otomasi pemrosesan dan ekstraksi PDF buku anak beresolusi tinggi (300 DPI
 │  - Stored object_key & sha  │            │  - Zero local disk residue   │
 └─────────────────────────────┘            └──────────────────────────────┘
 ```
-
----
-
-## Fitur Utama
-
-1. **Deterministic Layout Classification**: Otomatis mengenali layout `COVER_SPREAD`, `IMPOSITION_4UP`, dan `SINGLE_PAGE` berdasarkan spesifikasi `audit/Layout_Classifier_Specification_v1.3.4.md`.
-2. **Pemisahan Spine Presisi**:
-   - Cover depan diambil murni dari sisi kanan area spine.
-   - Backcover diambil murni dari sisi kiri area spine.
-   - Spine dieksklusi secara presisi sehingga tidak masuk ke crop cover maupun backcover.
-3. **Adaptive JPEG Compression**:
-   - Dimulai dari kualitas awal (Q95) pada resolusi **300 DPI RGB**.
-   - Menurunkan kualitas secara adaptif jika ukuran file melebihi limit.
-   - Memastikan ketajaman teks, ilustrasi, garis gambar, dan foto wajah anak tetap optimal.
-4. **Dual Storage Architecture**:
-   - `supabase`: Mengunggah ke Supabase Storage secara paralel/konkuren (8 worker). Browser mengambil gambar langsung dari CDN.
-   - `local`: Penyimpanan filesystem lokal untuk pengembangan offline.
-   - `r2`: Adapter siap pakai untuk migrasi Cloudflare R2 di masa depan.
-5. **Showcase Catalog & Book Spread Viewer**:
-   - Tampilan katalog `/books` responsif.
-   - Reader `/books/:id` menampilkan Cover depan mandiri, spread interior dua halaman berdampingan (Q1+Q2 dan Q3+Q4), navigasi thumbnail horizontal, serta tombol unduh ZIP.
-
----
 
 ## Prasyarat Sistem
 
